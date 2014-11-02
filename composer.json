@@ -12,5 +12,11 @@
   "require": {
     "silex/silex": "1.2.x-dev",
     "symfony/yaml": "2.1.x-dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "SimpleRoles\\": "src/",
+      "Tests\\": "tests/"
+    }
   }
 }
