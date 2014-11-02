@@ -1,0 +1,16 @@
+{
+  "name": "bradbonkoski/inventory-container",
+  "description": "Sample Restful Web application to demonstrate functional testing in containers",
+  "minimum-stability": "stable",
+  "license": "Apache 2.0",
+  "authors": [
+    {
+      "name": "Brad Bonkoski",
+      "email": "brad.bonkoski@gmail.com"
+    }
+  ],
+  "require": {
+    "silex/silex": "1.2.x-dev",
+    "symfony/yaml": "2.1.x-dev"
+  }
+}
