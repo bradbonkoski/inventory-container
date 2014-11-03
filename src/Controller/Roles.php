@@ -1,0 +1,55 @@
+<?php
+namespace SimpleRoles\Controller;
+
+/**
+ * Package API Class
+ *
+ * @category SimpleRoles
+ * @package package
+ * @author Brad Bonkoski <brad.bonkoski@gmail.com>
+ */
+
+use Silex\Application;
+use SimpleRoles\Model\Users;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * Package Class
+ * @package package
+ */
+class Roles
+{
+    private $code;
+
+    public function __construct()
+    {
+        $this->code = 200;
+    }
+
+    public function listRoles(Request $request, Application $app, $pattern = null)
+    {
+        $ret = array();
+        $roleModel = new \SimpleRoles\Model\Roles($app['db']);
+        $res = $roleModel->listRoles($pattern);
+
+        return $app->json($res, 200);
+    }
+
+    public function getUsers(Request $request, Application $app, $role)
+    {
+        $ret = array();
+        $roleModel = new \SimpleRoles\Model\Roles($app['db']);
+        $userIds = $roleModel->getUserIdsForRole($role);
+
+        $userModel = new Users($app['db']);
+        if (count($userIds) > 0) {
+            foreach($userIds as $uid) {
+                $ret[] = $userModel->getUserInfo($uid['user_id']);
+            }
+        } else {
+            return $app->json(array(), 200);
+        }
+
+        return $app->json($ret, 200);
+    }
+}

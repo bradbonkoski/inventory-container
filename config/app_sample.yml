@@ -1,0 +1,9 @@
+general:
+
+# Mysql or the like Database Connection Attributes.
+db:
+  host: <db_port>
+  port: <db_port>
+  user: <db_user>
+  pass: <db_pass>
+  dbname: <db_name>
