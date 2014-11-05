@@ -26,7 +26,7 @@ class Roles
         $this->code = 200;
     }
 
-    public function listRoles(Request $request, Application $app, $pattern = null)
+    public function listRoles(Application $app, $pattern = null)
     {
         $ret = array();
         $roleModel = new \SimpleRoles\Model\Roles($app['db']);
@@ -35,7 +35,7 @@ class Roles
         return $app->json($res, 200);
     }
 
-    public function getUsers(Request $request, Application $app, $role)
+    public function getUsers(Application $app, $role)
     {
         $ret = array();
         $roleModel = new \SimpleRoles\Model\Roles($app['db']);

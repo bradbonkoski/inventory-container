@@ -1,5 +1,5 @@
 insert into users (id, name, username) value
-(2, 'Sam Ball', 'balls'),
+(2, 'Sam Ball', 'balls'), -- do not update used for testing
 (3, 'Diana Terry', 'terryd'),
 (4, 'Natalie Short', 'shortn'),
 (5, 'Nicola Reid', 'reidn'),
