@@ -4,7 +4,6 @@ namespace SimpleRoles;
 
 use Symfony\Component\Yaml\Yaml;
 
-
 class Config
 {
     const KEYROOT = 'SIMPLE-ROLES-CONF';

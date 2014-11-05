@@ -53,5 +53,4 @@ class Roles
 
         return $res;
     }
-
 }

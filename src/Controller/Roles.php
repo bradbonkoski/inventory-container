@@ -11,7 +11,6 @@ namespace SimpleRoles\Controller;
 
 use Silex\Application;
 use SimpleRoles\Model\Users;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Package Class
@@ -28,7 +27,6 @@ class Roles
 
     public function listRoles(Application $app, $pattern = null)
     {
-        $ret = array();
         $roleModel = new \SimpleRoles\Model\Roles($app['db']);
         $res = $roleModel->listRoles($pattern);
 
@@ -43,7 +41,7 @@ class Roles
 
         $userModel = new Users($app['db']);
         if (count($userIds) > 0) {
-            foreach($userIds as $uid) {
+            foreach ($userIds as $uid) {
                 $ret[] = $userModel->getUserInfo($uid['user_id']);
             }
         } else {

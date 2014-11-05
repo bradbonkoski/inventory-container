@@ -1,8 +1,6 @@
 <?php
 
 use Silex\Application;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 class RolesTest extends \PHPUnit_Framework_TestCase {
 
