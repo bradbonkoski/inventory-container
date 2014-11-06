@@ -1,6 +1,6 @@
 {
-  "name": "bradbonkoski/inventory-container",
-  "description": "Sample Restful Web application to demonstrate functional testing in containers",
+  "name": "bradbonkoski/simpleRoles",
+  "description": "Simple Roles based Web Service",
   "minimum-stability": "stable",
   "license": "Apache 2.0",
   "authors": [
@@ -11,7 +11,8 @@
   ],
   "require": {
     "silex/silex": "1.2.x-dev",
-    "symfony/yaml": "2.1.x-dev"
+    "symfony/yaml": "2.1.x-dev",
+    "guzzle/guzzle": "~3.1.1"
   },
   "autoload": {
     "psr-4": {
