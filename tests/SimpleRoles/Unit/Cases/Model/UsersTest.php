@@ -48,4 +48,38 @@ class UsersTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('Sam Ball', $ret['name']);
         //print_r($ret);
     }
+
+    /**
+     * @test
+     */
+    public function testAddNewUserWhoseUserNameExists()
+    {
+        $userModel = new Users($this->db);
+        try {
+            $ret = $userModel->addNewUser('Fitzer Witzer', 'balls', 'ref');
+        } catch (\Exception $e) {
+            $this->assertEquals(23000, $e->getCode());
+            return;
+        }
+        $this->fail("Missed Expected Exception");
+    }
+
+    /**
+     * @test
+     */
+    public function testAddNewUserWhichShouldWork()
+    {
+        $userModel = new Users($this->db);
+        $ret = $userModel->addNewUser('Fitzgerald Whitebeard', 'fitzer', 'ref');
+        $this->assertTrue(is_numeric($ret));
+        $this->assertTrue($ret > 0);
+
+        $res = $userModel->getUserInfo($ret);
+        $this->assertEquals('Fitzgerald Whitebeard', $res['name']);
+        $this->assertEquals('fitzer', $res['username']);
+
+        $res = $userModel->getUserByUserName('fitzer');
+        $this->assertEquals('Fitzgerald Whitebeard', $res['name']);
+        $this->assertEquals($ret, $res['id']);
+    }
 }

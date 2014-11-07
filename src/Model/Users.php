@@ -24,4 +24,33 @@ class Users
         $res = $stmt->fetch();
         return $res;
     }
+
+    public function getUserByUserName($username)
+    {
+        $sql = "select * from users where username = :username";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(array(':username' => $username));
+        $res = $stmt->fetch();
+        return $res;
+    }
+
+    public function addNewUser($name, $userName, $ref)
+    {
+        $sql = "insert into users set name = :name, username = :username, ref = :ref";
+
+        $stmt = $this->db->prepare($sql);
+        $res = $stmt->execute(
+            array(
+                ':name' => $name,
+                ':username' => $userName,
+                ':ref' => $ref
+            )
+        );
+        //var_dump($res);
+        if ($res === false) {
+            $err = $stmt->errorInfo();
+            throw new \Exception($err[2], $stmt->errorCode());
+        }
+        return $this->db->lastInsertId();
+    }
 }

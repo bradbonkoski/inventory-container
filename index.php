@@ -23,6 +23,7 @@ $app->get('/users/{role}', 'SimpleRoles\Controller\Roles::getUsers');
 
 //POST - CREATES
 $app->post('/roles', 'SimpleRoles\Controller\Roles::newRoles');
+$app->post('/users', 'SimpleRoles\Controller\Users::newUsers');
 
 /* Default Catch All Route */
 $app->match(

@@ -2,7 +2,7 @@
 namespace SimpleRoles\Controller;
 
 /**
- * Package API Class
+ * Roles Controller Class
  *
  * @category SimpleRoles
  * @package package
@@ -14,9 +14,10 @@ use SimpleRoles\Model\Users;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Package Class
- * @package package
+ * Class Roles
+ * @package SimpleRoles\Controller
  */
+
 class Roles
 {
     private $code;

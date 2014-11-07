@@ -3,12 +3,6 @@
 namespace SimpleRoles\Unit\Model;
 use SimpleRoles\Model\Roles;
 
-/**
- * Created by PhpStorm.
- * User: bradb
- * Date: 11/2/14
- * Time: 8:21 PM
- */
 
 class RolesTest extends \PHPUnit_Framework_TestCase {
     private $db;
