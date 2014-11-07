@@ -16,6 +16,18 @@ class Roles
         $this->db = $db;
     }
 
+    public function roleExists($role)
+    {
+        $sql = "select id from role where name = :role";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(array(':role' => $role));
+        $res = $stmt->fetch();
+        if ($res === null || $res['id'] <= 0) {
+            return false;
+        }
+        return $res['id'];
+    }
+
     public function listRoles($search = null)
     {
         $sql = "select * from role";
@@ -52,5 +64,13 @@ class Roles
         $res = $stmt->fetchAll();
 
         return $res;
+    }
+
+    public function createNewRole($role, $desc)
+    {
+        $sql = "insert into role set name = :role, description = :desc";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(array(':role' => $role, ':desc' => $desc));
+        return $this->db->lastInsertId();
     }
 }

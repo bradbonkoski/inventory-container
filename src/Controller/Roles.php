@@ -11,6 +11,7 @@ namespace SimpleRoles\Controller;
 
 use Silex\Application;
 use SimpleRoles\Model\Users;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Package Class
@@ -48,6 +49,28 @@ class Roles
             return $app->json(array(), 200);
         }
 
+        return $app->json($ret, 200);
+    }
+
+    public function newRoles(Request $req, Application $app)
+    {
+        $ret = array();
+        $roles = json_decode($req->getContent(), true);
+        $roleModel = new \SimpleRoles\Model\Roles($app['db']);
+        foreach ($roles as $role) {
+            $rid = $roleModel->roleExists($role['name']);
+            if ($rid === false) {
+                //Create a new Role
+                 $rid = $roleModel->createNewRole($role['name'], $role['desc']);
+            }
+            if (is_numeric($rid) && $rid > 0) {
+                $ret[] = array(
+                    'id' => $rid,
+                    'name' => $role['name'],
+                    'desc' => $role['desc']
+                );
+            }
+        }
         return $app->json($ret, 200);
     }
 }

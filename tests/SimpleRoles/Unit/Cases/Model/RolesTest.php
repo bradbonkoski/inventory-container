@@ -72,4 +72,29 @@ class RolesTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($ret['id'], 1);
         $this->assertEquals($ret['name'], 'read');
     }
+
+    /**
+     * @test
+     */
+    public function testRoleExists()
+    {
+        $roleModel = new Roles($this->db);
+        $ret = $roleModel->roleExists('read');
+        $this->assertEquals(1, $ret);
+
+        // This role should not exist!
+        $ret = $roleModel->roleExists('someomfkjsgskljgsdvfs');
+        $this->assertTrue($ret === false);
+    }
+
+    /**
+     * @test
+     */
+    public function testAddingNewRole()
+    {
+        $roleModel = new Roles($this->db);
+        $ret = $roleModel->createNewRole('newTestRole', 'testing creation of new role');
+        $this->assertTrue(is_numeric($ret));
+        $this->assertTrue($ret > 0);
+    }
 }

@@ -21,6 +21,9 @@ $app->get('/roles/{pattern}', 'SimpleRoles\Controller\Roles::listRoles');
 
 $app->get('/users/{role}', 'SimpleRoles\Controller\Roles::getUsers');
 
+//POST - CREATES
+$app->post('/roles', 'SimpleRoles\Controller\Roles::newRoles');
+
 /* Default Catch All Route */
 $app->match(
     '{url}',
