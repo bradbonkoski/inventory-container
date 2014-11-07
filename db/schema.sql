@@ -59,7 +59,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) NOT NULL,
   `username` varchar(64) NOT NULL,
-  `title` varchar(128) DEFAULT NULL,
+  `ref` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idxUserName` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
