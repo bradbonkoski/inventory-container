@@ -91,4 +91,31 @@ class RolesTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue(is_numeric($ret));
         $this->assertTrue($ret > 0);
     }
+
+    /**
+     * @test
+     * @covers SimpleRoles\Model\Roles::addUserToRole
+     * @uses SimpleRoles\Model\Roles
+     */
+    public function testAddUserToRole()
+    {
+        //role: ModelAddUserToRoleTest
+        $rid = 8;
+        $roleModel = new Roles($this->db);
+        try {
+            $roleModel->addUserToRole($rid, 900);
+        } catch (\Exception $e) {
+            $this->fail("Unexpected Exception");
+            return;
+        }
+        $this->assertTrue(true);
+
+        try {
+            $roleModel->addUserToRole($rid, 900);
+        } catch (\Exception $e) {
+            $this->assertTrue(true);
+            return;
+        }
+        $this->fail("Missed Expected Exception");
+    }
 }

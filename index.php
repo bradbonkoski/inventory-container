@@ -25,6 +25,8 @@ $app->get('/users/{role}', 'SimpleRoles\Controller\Roles::getUsers');
 $app->post('/roles', 'SimpleRoles\Controller\Roles::newRoles');
 $app->post('/users', 'SimpleRoles\Controller\Users::newUsers');
 
+$app->put('/roles', 'SimpleRoles\Controller\Roles::addUserToRole'); //add user to a role
+
 /* Default Catch All Route */
 $app->match(
     '{url}',

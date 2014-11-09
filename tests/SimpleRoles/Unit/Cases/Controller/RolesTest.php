@@ -121,4 +121,72 @@ class RolesTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals('newRole11', $ret[1]['name']);
     }
+
+    /**
+     * @test
+     * @covers SimpleRoles\Controller\Roles::addUserToRole
+     * @uses SimpleRoles\Controller\Roles
+     * @uses SimpleRoles\Model\Roles
+     * @uses SimpleRoles\Model\Users
+     */
+    public function testAddingUsersToRole()
+    {
+        $role = "roleForUsersToBeAddedTest1";
+        $groups = array(
+            array (
+                'role' => $role,
+                'user' => 'poolea'
+            ), array(
+                'role' =>$role,
+                'user' => 'leev'
+            ), array(
+                'role' => $role,
+                'user' => 'kingr'
+            ), array(
+                'role' => $role,
+                'user' => 'grays'
+            ),
+        );
+
+        $data = json_encode($groups);
+        $req = new Request(array(), array(), array(), array(), array(), array(), $data);
+        $rolesController = new \SimpleRoles\Controller\Roles();
+
+        $res = $rolesController->addUserToRole($req, $this->app);
+        $ret = json_decode($res->getContent(), true);
+        $this->assertTrue(is_array($ret));
+        $this->assertTrue(array_key_exists('success', $ret));
+        $this->assertEquals(4, count($ret['success']));
+        $this->assertTrue(!array_key_exists('error', $ret));
+    }
+
+    /**
+     * @test
+     * @covers SimpleRoles\Controller\Roles::addUserToRole
+     * @uses SimpleRoles\Controller\Roles
+     * @uses SimpleRoles\Model\Roles
+     * @uses SimpleRoles\Model\Users
+     */
+    public function testAddingUsersToRoleAlreadyThere()
+    {
+        $role = "read";
+        $user = "bakeri";
+        $groups = array(
+            array (
+                'role' => $role,
+                'user' => $user
+            )
+        );
+
+        $data = json_encode($groups);
+        $req = new Request(array(), array(), array(), array(), array(), array(), $data);
+        $rolesController = new \SimpleRoles\Controller\Roles();
+
+        $res = $rolesController->addUserToRole($req, $this->app);
+        $ret = json_decode($res->getContent(), true);
+        $this->assertTrue(is_array($ret));
+        $this->assertTrue(!array_key_exists('success', $ret));
+        $this->assertTrue(array_key_exists('error', $ret));
+        $this->assertEquals(1, count($ret['error']));
+    }
 }

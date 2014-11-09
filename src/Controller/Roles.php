@@ -74,4 +74,28 @@ class Roles
         }
         return $app->json($ret, 200);
     }
+
+    public function addUserToRole(Request $req, Application $app)
+    {
+        $records = json_decode($req->getContent(), true);
+        //get role id, get user id and assuming they both exist add it to the join table
+        $ret = array();
+        $roleModel = new \SimpleRoles\Model\Roles($app['db']);
+        $userModel = new Users($app['db']);
+
+        foreach($records as $record) {
+            $rid = $roleModel->roleExists($record['role']);
+            $userInfo = $userModel->getUserByUserName($record['user']);
+            $uid = $userInfo['id'];
+            try {
+                $roleModel->addUserToRole($rid, $uid);
+            } catch (\Exception $e) {
+                $ret['error'][] = "{$record['role']} - {$record['user']} Failed : ".$e->getMessage();
+                continue;
+            }
+            $ret['success'][] = "{$record['role']} - {$record['user']} Added";
+        }
+
+        return $app->json($ret, 200);
+    }
 }

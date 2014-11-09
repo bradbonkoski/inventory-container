@@ -66,6 +66,18 @@ class Roles
         return $res;
     }
 
+    public function addUserToRole($rid, $uid)
+    {
+        $sql = "insert into user_roles set user_id = :uid, role_id = :rid";
+        $stmt = $this->db->prepare($sql);
+        $res = $stmt->execute(array(':uid' => $uid, ':rid' => $rid));
+        if ($res === false) {
+            $err = $stmt->errorInfo();
+            throw new \Exception($err[2], $stmt->errorCode());
+        }
+    }
+
+
     public function createNewRole($role, $desc)
     {
         $sql = "insert into role set name = :role, description = :desc";

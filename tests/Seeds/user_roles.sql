@@ -1,6 +1,6 @@
 insert into user_roles(role_id, user_id) VALUES
   (1, 2),
-  (1, 44),
+  (1, 44),  -- used for RolesControllerTest::testAddingUsersToRoleAlreadyThere
   (1, 4),
   (1, 10),
   (2, 2),
