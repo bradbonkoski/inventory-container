@@ -189,4 +189,25 @@ class RolesTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue(array_key_exists('error', $ret));
         $this->assertEquals(1, count($ret['error']));
     }
+
+    /**
+     * @test
+     */
+    public function testDeleteRole()
+    {
+        $role = "RoleToBeDeletedByControllerAutomatedTest";
+
+        $rolesController = new \SimpleRoles\Controller\Roles();
+        $res = $rolesController->listRoles($this->app, $role);
+        $ret = json_decode($res->getContent(), true);
+
+        $this->assertEquals($role, $ret[0]['name']);
+
+        $res = $rolesController->deleteRole($this->app, $role);
+        $this->assertEquals(200, $res->getStatusCode());
+
+        $res = $rolesController->listRoles($this->app, $role);
+        $ret = json_decode($res->getContent(), true);
+        $this->assertEquals(0, count($ret));
+    }
 }

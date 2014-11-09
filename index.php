@@ -27,6 +27,11 @@ $app->post('/users', 'SimpleRoles\Controller\Users::newUsers');
 
 $app->put('/roles', 'SimpleRoles\Controller\Roles::addUserToRole'); //add user to a role
 
+//remove a user from a role
+
+//delete a role
+$app->delete('/role/{role}', 'SimpleRoles\Controller\Roles::deleteRole');
+
 /* Default Catch All Route */
 $app->match(
     '{url}',

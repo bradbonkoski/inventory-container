@@ -27,6 +27,11 @@ class Roles
         $this->code = 200;
     }
 
+    /**
+     * @param Application $app
+     * @param null $pattern
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
     public function listRoles(Application $app, $pattern = null)
     {
         $roleModel = new \SimpleRoles\Model\Roles($app['db']);
@@ -51,6 +56,19 @@ class Roles
         }
 
         return $app->json($ret, 200);
+    }
+
+    /**
+     * @param Application $app
+     * @param $role
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function deleteRole(Application $app, $role)
+    {
+        $roleModel = new \SimpleRoles\Model\Roles($app['db']);
+        $res = $roleModel->deleteRole($role);
+
+        return $app->json(array(), 200);
     }
 
     public function newRoles(Request $req, Application $app)

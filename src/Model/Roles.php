@@ -77,12 +77,19 @@ class Roles
         }
     }
 
-
     public function createNewRole($role, $desc)
     {
         $sql = "insert into role set name = :role, description = :desc";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(array(':role' => $role, ':desc' => $desc));
         return $this->db->lastInsertId();
+    }
+
+    public function deleteRole($role)
+    {
+        $sql = "delete from role where name = :role";
+        $stmt = $this->db->prepare($sql);
+        $res = $stmt->execute(array(':role' => $role));
+        return $res;
     }
 }

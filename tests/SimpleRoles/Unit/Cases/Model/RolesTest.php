@@ -118,4 +118,22 @@ class RolesTest extends \PHPUnit_Framework_TestCase {
         }
         $this->fail("Missed Expected Exception");
     }
+
+    /**
+     * @test
+     * @covers SimpleRoles\Model\Roles::deleteRole
+     * @uses SimpleRoles\Model\Roles
+     */
+    public function testDeleteRole()
+    {
+        $role = "RoleToBeDeletedByAutomatedTest";
+        $roleModel = new Roles($this->db);
+        $ret = $roleModel->getRoleInfo($role);
+        $this->assertEquals($role, $ret['name']);
+
+        $roleModel->deleteRole($role);
+
+        $ret = $roleModel->getRoleInfo($role);
+        $this->assertTrue($ret == null);
+    }
 }
