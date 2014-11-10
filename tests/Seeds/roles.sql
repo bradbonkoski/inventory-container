@@ -9,7 +9,9 @@ insert into role(id, name, description) VALUES
   (7, 'roleForUsersToBeAddedTest1', 'Test1'),
   (8, 'ModelAddUserToRoleTest', 'Test2'),
   (9, 'RoleToBeDeletedByAutomatedTest', 'to be nuked'),
-  (10, 'RoleToBeDeletedByControllerAutomatedTest', 'to be nuked')
+  (10, 'RoleToBeDeletedByControllerAutomatedTest', 'to be nuked'),
+  (11, 'RoleToBeSavedTestRemoveUsersController', 'used for model ci testing'),
+  (12, 'RoleToBeSavedTestRemoveUsersModel', 'used for model ci testing')
 ;
 
 

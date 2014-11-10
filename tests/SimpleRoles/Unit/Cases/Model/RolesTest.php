@@ -136,4 +136,22 @@ class RolesTest extends \PHPUnit_Framework_TestCase {
         $ret = $roleModel->getRoleInfo($role);
         $this->assertTrue($ret == null);
     }
+
+    /**
+     * @test
+     * @covers SimpleRoles\Model\Roles::removeUserFromRole
+     * @uses SimpleRoles\Model\Roles
+     */
+    public function testRemoveUserFromRole()
+    {
+        $role = "RoleToBeSavedTestRemoveUsersModel";
+        $roleModel = new Roles($this->db);
+        $ret = $roleModel->getUserIdsForRole(12);
+        $this->assertEquals(2, count($ret));
+
+        $ret = $roleModel->removeUserFromRole(12, 2);
+
+        $ret = $roleModel->getUserIdsForRole(12);
+        $this->assertEquals(1, count($ret));
+    }
 }

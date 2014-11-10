@@ -22,15 +22,15 @@ $app->get('/roles/{pattern}', 'SimpleRoles\Controller\Roles::listRoles');
 $app->get('/users/{role}', 'SimpleRoles\Controller\Roles::getUsers');
 
 //POST - CREATES
-$app->post('/roles', 'SimpleRoles\Controller\Roles::newRoles');
-$app->post('/users', 'SimpleRoles\Controller\Users::newUsers');
+$app->post('/roles', 'SimpleRoles\Controller\Roles::newRoles'); //creates new role
+$app->post('/users', 'SimpleRoles\Controller\Users::newUsers'); //creates new user
 
 $app->put('/roles', 'SimpleRoles\Controller\Roles::addUserToRole'); //add user to a role
 
-//remove a user from a role
-
 //delete a role
-$app->delete('/role/{role}', 'SimpleRoles\Controller\Roles::deleteRole');
+$app->delete('/roles', 'SimpleRoles\Controller\Roles::removeUser'); //removes user(s) from role(s)
+
+$app->delete('/role/{role}', 'SimpleRoles\Controller\Roles::deleteRole'); //deletes a role
 
 /* Default Catch All Route */
 $app->match(

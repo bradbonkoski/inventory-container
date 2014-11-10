@@ -210,4 +210,37 @@ class RolesTest extends \PHPUnit_Framework_TestCase {
         $ret = json_decode($res->getContent(), true);
         $this->assertEquals(0, count($ret));
     }
+
+    /**
+     * @test
+     */
+    public function testRemoveUsersFromRole()
+    {
+        $role = "RoleToBeSavedTestRemoveUsersController";
+
+        $rolesController = new \SimpleRoles\Controller\Roles();
+
+        $res = $rolesController->getUsers($this->app, $role);
+        $ret = json_decode($res->getContent(), true);
+        $this->assertTrue(is_array($ret));
+        $this->assertEquals(3, count($ret));
+
+        $groups = array(
+            array (
+                'role' => $role,
+                'user' => 'balls'
+            )
+        );
+        $data = json_encode($groups);
+        $req = new Request(array(), array(), array(), array(), array(), array(), $data);
+        $res = $rolesController->removeUser($req, $this->app);
+        $this->assertEquals(200, $res->getStatusCode());
+        $ret = json_decode($res->getContent(), true);
+        $this->assertEquals(1, count($ret));
+
+        $res = $rolesController->getUsers($this->app, $role);
+        $ret = json_decode($res->getContent(), true);
+        $this->assertTrue(is_array($ret));
+        $this->assertEquals(2, count($ret));
+    }
 }

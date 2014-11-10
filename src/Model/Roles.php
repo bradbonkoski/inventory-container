@@ -92,4 +92,11 @@ class Roles
         $res = $stmt->execute(array(':role' => $role));
         return $res;
     }
+
+    public function removeUserFromRole($rid, $uid)
+    {
+        $sql = "delete from user_roles where user_id = :uid and role_id = :rid";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute(array(':uid' => $uid, ':rid' => $rid));
+    }
 }
