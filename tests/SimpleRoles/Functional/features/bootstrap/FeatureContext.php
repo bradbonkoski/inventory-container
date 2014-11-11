@@ -201,4 +201,42 @@ class FeatureContext extends BehatContext
         }
         //throw new PendingException();
     }
+
+    /**
+     * @Given /^I will get the following list of users:$/
+     */
+    public function iWillGetTheFollowingListOfUsers(TableNode $tableData)
+    {
+        $data = $this->response->json();
+        self::log(print_r($data, true));
+
+        $rows = $tableData->getRows();
+        self::log(print_r($rows, true));
+
+        if (count($rows) != count($data)) {
+            throw new Exception("Row Mismatch");
+        }
+
+        for ($i = 0; $i < count($data); $i++) {
+            $act = $data[$i];
+            $exp = $rows[$i];
+            if ($act['id'] != $exp[0]) {
+                throw new Exception("Bad[id]");
+            }
+
+            if ($act['name'] != $exp[1]) {
+                throw new Exception("Bad[name]");
+            }
+
+            if ($act['username'] != $exp[2]) {
+                throw new Exception("Bad[username] ");
+            }
+
+            if ($act['ref'] != $exp[3]) {
+                throw new Exception("Bad[ref] ");
+            }
+        }
+        //throw new PendingException();
+    }
+
 }
