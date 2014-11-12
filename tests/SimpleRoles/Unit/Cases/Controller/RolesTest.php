@@ -62,7 +62,7 @@ class RolesTest extends \PHPUnit_Framework_TestCase {
         $fields = array(
             'roles' => array (
                 'name' => 'newRole1',
-                'desc' => 'Description of Controller CI/Unit Test Created Role'
+                'description' => 'Description of Controller CI/Unit Test Created Role'
             )
         );
 
@@ -80,7 +80,7 @@ class RolesTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('newRole1', $ret[0]['name']);
         $this->assertEquals(
             'Description of Controller CI/Unit Test Created Role',
-            $ret[0]['desc']
+            $ret[0]['description']
         );
     }
 
@@ -92,13 +92,13 @@ class RolesTest extends \PHPUnit_Framework_TestCase {
         $fields = array(
             'roles' => array (
                 'name' => 'newRole10',
-                'desc' => 'Description of Controller CI/Unit Test Created Role'
+                'description' => 'Description of Controller CI/Unit Test Created Role'
             ), array(
                 'name' => 'newRole11',
-                'desc' => 'Description of Controller CI/Unit Test Created Role'
+                'description' => 'Description of Controller CI/Unit Test Created Role'
             ), array(
                 'name' => 'newRole12',
-                'desc' => 'Description of Controller CI/Unit Test Created Role'
+                'description' => 'Description of Controller CI/Unit Test Created Role'
             )
         );
 
@@ -116,7 +116,7 @@ class RolesTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('newRole10', $ret[0]['name']);
         $this->assertEquals(
             'Description of Controller CI/Unit Test Created Role',
-            $ret[0]['desc']
+            $ret[0]['description']
         );
 
         $this->assertEquals('newRole11', $ret[1]['name']);

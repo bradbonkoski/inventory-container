@@ -80,13 +80,13 @@ class Roles
             $rid = $roleModel->roleExists($role['name']);
             if ($rid === false) {
                 //Create a new Role
-                 $rid = $roleModel->createNewRole($role['name'], $role['desc']);
+                 $rid = $roleModel->createNewRole($role['name'], $role['description']);
             }
             if (is_numeric($rid) && $rid > 0) {
                 $ret[] = array(
                     'id' => $rid,
                     'name' => $role['name'],
-                    'desc' => $role['desc']
+                    'description' => $role['description']
                 );
             }
         }

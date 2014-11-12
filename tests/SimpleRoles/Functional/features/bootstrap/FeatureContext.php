@@ -23,8 +23,10 @@ class FeatureContext extends BehatContext
 
     private $baseUrl = "http://localhost/sr";
     private static $db;
-    private $restObject        = null;
-    private $response          = null;
+    private $restObject = null;
+    private $response = null;
+    private $requestUrl = null;
+    private $requestData;
 
     /**
      * Initializes context.
@@ -40,6 +42,8 @@ class FeatureContext extends BehatContext
 
         $this->restObject = new stdClass();
         $this->client = new Guzzle\Service\Client();
+
+        $this->requestData = array();
     }
 
     private static function log($msg)
@@ -75,6 +79,15 @@ class FeatureContext extends BehatContext
         return $ret;
 
     }
+
+    /**
+     * @Given /^There is nothing in the "([^"]*)" table$/
+     */
+    public function thereIsNothingInTheTable($table)
+    {
+        self::$db->exec("delete from $table");
+    }
+
 
     /**
      * @Given /^I have this information in my "([^"]*)" table$/
@@ -140,10 +153,30 @@ class FeatureContext extends BehatContext
                     $resp = $e->getResponse();
                 }
                 break;
+            case 'post':
+                try {
+                    $resp = $this->client
+                        ->post($this->requestUrl, array(), json_encode($this->requestData))
+                        ->send();
+                } catch (\Guzzle\Http\Exception\RequestException $e) {
+                    $resp = $e->getResponse();
+                }
+            break;
         }
         $this->response = $resp;
+    }
+
+    /**
+     * @Given /^I want to create a new role named "([^"]*)" with description "([^"]*)"$/
+     */
+    public function iWantToCreateANewRoleNamedWithDescription($name, $desc)
+    {
+        $arr = array('name' => $name, 'description' => $desc);
+        $this->requestData[] = $arr;
         //throw new PendingException();
     }
+
+
 
     /**
      * @Then /^The Response Code will be "([^"]*)"$/
@@ -152,7 +185,7 @@ class FeatureContext extends BehatContext
     {
         $testCode = $this->response->getStatusCode();
         if ($code != $testCode) {
-            throw new Exception("Invliad Response Code.  Expected: $code got: $testCode");
+            throw new Exception("Invalid Response Code.  Expected: $code got: $testCode");
         }
     }
 
@@ -162,6 +195,7 @@ class FeatureContext extends BehatContext
     public function theResponseIsJson()
     {
         $data = $this->response->json();
+        self::log(print_r($data, true));
         if (empty($data)) {
             throw new Exception("Request was not JSON");
         }
@@ -185,17 +219,27 @@ class FeatureContext extends BehatContext
 
 
         for ($i = 0; $i < count($data); $i++) {
+
+            // Actual data received from the Web Service
             $act = $data[$i];
+
+            // Expected Results from the TableNode
             $exp = $rows[$i];
-            if ($act['id'] != $exp[0]) {
-                throw new Exception("Bad[id]");
+            $cnt = count($exp);
+
+            self::log("CNT is $cnt");
+            self::log(print_r($act, true));
+            if ($cnt == 3) {
+                if ($act['id'] != $exp[0]) {
+                    throw new Exception("Bad[id]");
+                }
             }
 
-            if ($act['name'] != $exp[1]) {
+            if ($act['name'] != $exp[$cnt-2]) {
                 throw new Exception("Bad[name]");
             }
 
-            if ($act['description'] != $exp[2]) {
+            if ($act['description'] != $exp[$cnt-1]) {
                 throw new Exception("Bad[desc] ");
             }
         }
