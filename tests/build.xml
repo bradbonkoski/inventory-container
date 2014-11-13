@@ -4,6 +4,9 @@
     <target name="build"
             depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpunit"/>
 
+
+    <target name="travis" description="Travis CI Build" depends="prepare,lint,phpunit-travis"/>
+
     <target name="clean" description="Cleanup build artifacts">
         <delete dir="${basedir}/build/api"/>
         <delete dir="${basedir}/build/code-browser"/>
@@ -19,9 +22,6 @@
         <mkdir dir="${basedir}/build/coverage"/>
         <mkdir dir="${basedir}/build/logs"/>
         <mkdir dir="${basedir}/build/pdepend"/>
-    </target>
-
-    <target name="phpunitPrepare" description="Prep for phpunit">
     </target>
 
     <target name="lint">
@@ -126,7 +126,18 @@
         </exec>
     </target>
 
-    <target name="phpunit" description="Run unit tests with PHPUnit" depends="phpunitPrepare,db">
+    <target name="phpunit-travis" description="Travis phpunit">
+        <exec executable="phpunit" failonerror="true">
+            <arg value="-c"/>
+            <arg path="${basedir}/tests/SimpleRoles/Unit/phpunit.xml"/>
+            <arg value="--coverage-html"/>
+            <arg path="${basedir}/build/logs/coverage"/>
+            <arg value="--coverage-clover"/>
+            <arg path="${basedir}/build/logs/clover.xml"/>
+        </exec>
+    </target>
+
+    <target name="phpunit" description="Run unit tests with PHPUnit" depends="db">
         <exec executable="phpunit" failonerror="true">
             <arg value="-c"/>
             <arg path="${basedir}/tests/SimpleRoles/Unit/phpunit.xml"/>
@@ -186,6 +197,4 @@
                 src="${basedir}/tests/Seeds/user_roles.sql"
                 />
     </target>
-
-
 </project>

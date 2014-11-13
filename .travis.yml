@@ -12,6 +12,12 @@ env:
 before_script:
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
+  - mysql -e "CREATE database IF NOT EXISTS simpleRoles" -uroot
+  - mysql -e db/schema.sql -uroot
+  - mysql -e tests/Seeds/roles.sql -uroot
+  - mysql -e tests/Seeds/users.sql -uroot
+  - mysql -e tests/Seeds/user_roles.sql -uroot
+  - cp config/app_travis.yml config/app.yml
 
 script:
   - cd tests; ant

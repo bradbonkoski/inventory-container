@@ -2,7 +2,7 @@ general:
 
 # Mysql or the like Database Connection Attributes.
 db:
-  host: <db_port>
+  host: <db_host>
   port: <db_port>
   user: <db_user>
   pass: <db_pass>
