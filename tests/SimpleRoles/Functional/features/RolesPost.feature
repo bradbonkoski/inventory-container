@@ -1,7 +1,7 @@
 Feature: Test out Posting to Roles
 
   Scenario: As a user I would like to create a new role
-    Given There is nothing in the "role" table
+    Given There are no "roles" in the system
     And I want to create a new role named "role1" with description "Description of Role 1"
     And I want to create a new role named "role2" with description "Description of Role 2"
     When I issue a "POST" request to "/roles"

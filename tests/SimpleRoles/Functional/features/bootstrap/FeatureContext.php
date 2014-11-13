@@ -81,10 +81,14 @@ class FeatureContext extends BehatContext
     }
 
     /**
-     * @Given /^There is nothing in the "([^"]*)" table$/
+     * @Given /^There are no "([^"]*)" in the system$/
      */
-    public function thereIsNothingInTheTable($table)
+    public function thereAreNoInTheSystem($table)
     {
+        if ($table == 'roles') {
+            $table = 'role';
+        }
+
         self::$db->exec("delete from $table");
     }
 
@@ -173,10 +177,17 @@ class FeatureContext extends BehatContext
     {
         $arr = array('name' => $name, 'description' => $desc);
         $this->requestData[] = $arr;
-        //throw new PendingException();
     }
 
-
+    /**
+     * Test Compliment for added in a new user
+     * @Given /^I want to create a new user named "([^"]*)" with username of "([^"]*)" and a reference of "([^"]*)"$/
+     */
+    public function iWantToCreateANewUserNamedWithUsernameOfAndAReferenceOf($user, $username, $ref)
+    {
+        $arr = array('name' => $user, 'username' => $username, 'ref' => $ref);
+        $this->requestData[] = $arr;
+    }
 
     /**
      * @Then /^The Response Code will be "([^"]*)"$/
