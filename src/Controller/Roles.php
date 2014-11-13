@@ -83,14 +83,14 @@ class Roles
                  $rid = $roleModel->createNewRole($role['name'], $role['description']);
             }
             if (is_numeric($rid) && $rid > 0) {
-                $ret[] = array(
+                $ret[$rid] = array(
                     'id' => $rid,
                     'name' => $role['name'],
                     'description' => $role['description']
                 );
             }
         }
-        return $app->json($ret, 200);
+        return $app->json(array_values($ret), 200);
     }
 
     public function addUserToRole(Request $req, Application $app)

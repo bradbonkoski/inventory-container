@@ -16,6 +16,10 @@ class Roles
         $this->db = $db;
     }
 
+    /**
+     * @param $role
+     * @return bool
+     */
     public function roleExists($role)
     {
         $sql = "select id from role where name = :role";
@@ -28,6 +32,10 @@ class Roles
         return $res['id'];
     }
 
+    /**
+     * @param null $search
+     * @return array
+     */
     public function listRoles($search = null)
     {
         $sql = "select * from role";
@@ -41,6 +49,10 @@ class Roles
         return $res;
     }
 
+    /**
+     * @param $role
+     * @return mixed
+     */
     public function getRoleInfo($role)
     {
         $sql = "select * from role where ";
@@ -55,6 +67,10 @@ class Roles
         return $res;
     }
 
+    /**
+     * @param $role
+     * @return array
+     */
     public function getUserIdsForRole($role)
     {
         $roleInfo = $this->getRoleInfo($role);
@@ -66,6 +82,11 @@ class Roles
         return $res;
     }
 
+    /**
+     * @param $rid
+     * @param $uid
+     * @throws \Exception
+     */
     public function addUserToRole($rid, $uid)
     {
         $sql = "insert into user_roles set user_id = :uid, role_id = :rid";
@@ -77,6 +98,11 @@ class Roles
         }
     }
 
+    /**
+     * @param $role
+     * @param $desc
+     * @return string
+     */
     public function createNewRole($role, $desc)
     {
         $sql = "insert into role set name = :role, description = :desc";
@@ -85,6 +111,10 @@ class Roles
         return $this->db->lastInsertId();
     }
 
+    /**
+     * @param $role
+     * @return bool
+     */
     public function deleteRole($role)
     {
         $sql = "delete from role where name = :role";
@@ -93,6 +123,11 @@ class Roles
         return $res;
     }
 
+    /**
+     * @param $rid
+     * @param $uid
+     * @return bool
+     */
     public function removeUserFromRole($rid, $uid)
     {
         $sql = "delete from user_roles where user_id = :uid and role_id = :rid";
