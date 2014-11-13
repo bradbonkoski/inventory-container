@@ -20,13 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Roles
 {
-    private $code;
-
-    public function __construct()
-    {
-        $this->code = 200;
-    }
-
     /**
      * @param Application $app
      * @param null $pattern
@@ -66,7 +59,7 @@ class Roles
     public function deleteRole(Application $app, $role)
     {
         $roleModel = new \SimpleRoles\Model\Roles($app['db']);
-        $res = $roleModel->deleteRole($role);
+        $roleModel->deleteRole($role);
 
         return $app->json(array(), 200);
     }
@@ -93,6 +86,11 @@ class Roles
         return $app->json(array_values($ret), 200);
     }
 
+    /**
+     * @param Request $req
+     * @param Application $app
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
     public function addUserToRole(Request $req, Application $app)
     {
         $records = json_decode($req->getContent(), true);
@@ -117,6 +115,11 @@ class Roles
         return $app->json($ret, 200);
     }
 
+    /**
+     * @param Request $req
+     * @param Application $app
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
     public function removeUser(Request $req, Application $app)
     {
         $records = json_decode($req->getContent(), true);

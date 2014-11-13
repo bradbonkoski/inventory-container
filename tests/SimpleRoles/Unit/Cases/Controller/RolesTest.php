@@ -11,7 +11,7 @@ class RolesTest extends \PHPUnit_Framework_TestCase {
     {
         parent::setUp();
         $this->app = new Application();
-        $this->app['db'] =  new \PDO("mysql:host=localhost;dbname=simpleRoles", 'test', '');
+        $this->app['db'] =  new \PDO("mysql:host=127.0.0.1;dbname=simpleRoles", 'travis', '');
     }
 
     /**
@@ -125,7 +125,6 @@ class RolesTest extends \PHPUnit_Framework_TestCase {
     /**
      * @test
      * @covers SimpleRoles\Controller\Roles::addUserToRole
-     * @uses SimpleRoles\Controller\Roles
      * @uses SimpleRoles\Model\Roles
      * @uses SimpleRoles\Model\Users
      */
@@ -163,7 +162,6 @@ class RolesTest extends \PHPUnit_Framework_TestCase {
     /**
      * @test
      * @covers SimpleRoles\Controller\Roles::addUserToRole
-     * @uses SimpleRoles\Controller\Roles
      * @uses SimpleRoles\Model\Roles
      * @uses SimpleRoles\Model\Users
      */

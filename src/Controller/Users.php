@@ -19,13 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Users
 {
-    private $code;
-
-    public function __construct()
-    {
-        $this->code = 200;
-    }
-
     public function newUsers(Request $req, Application $app)
     {
         $ret = array();
@@ -46,6 +39,6 @@ class Users
                 'ref' => $user['ref']
             );
         }
-        return $app->json($ret, 200);
+        return $app->json(array_values($ret), 200);
     }
 }

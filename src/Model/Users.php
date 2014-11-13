@@ -46,7 +46,6 @@ class Users
                 ':ref' => $ref
             )
         );
-        //var_dump($res);
         if ($res === false) {
             $err = $stmt->errorInfo();
             throw new \Exception($err[2], $stmt->errorCode());

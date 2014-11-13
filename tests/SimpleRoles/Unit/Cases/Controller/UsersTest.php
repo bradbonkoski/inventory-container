@@ -11,11 +11,13 @@ class UsersTest extends \PHPUnit_Framework_TestCase {
     {
         parent::setUp();
         $this->app = new Application();
-        $this->app['db'] =  new \PDO("mysql:host=localhost;dbname=simpleRoles", 'test', '');
+        $this->app['db'] =  new \PDO("mysql:host=127.0.0.1;dbname=simpleRoles", 'travis', '');
     }
 
     /**
      * @test
+     * @covers SimpleRoles\Controller\Users::newUsers
+     * @uses SimpleRoles\Model\Users
      */
     public function testAddingNewUser()
     {
@@ -36,10 +38,10 @@ class UsersTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue(is_array($ret));
         $this->assertTrue(count($ret) == 1);
 
-        $this->assertTrue(is_numeric($ret['frawnf']['id']));
-        $this->assertEquals('Frank Frawn', $ret['frawnf']['name']);
-        $this->assertEquals('frawnf', $ret['frawnf']['username']);
-        $this->assertEquals('?user=frawnf', $ret['frawnf']['ref']);
+        $this->assertTrue(is_numeric($ret[0]['id']));
+        $this->assertEquals('Frank Frawn', $ret[0]['name']);
+        $this->assertEquals('frawnf', $ret[0]['username']);
+        $this->assertEquals('?user=frawnf', $ret[0]['ref']);
     }
 
     /**
@@ -68,15 +70,15 @@ class UsersTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue(is_array($ret));
         $this->assertTrue(count($ret) == 2);
 
-        $this->assertTrue(is_numeric($ret['homez']['id']));
-        $this->assertEquals('Zelda Home', $ret['homez']['name']);
-        $this->assertEquals('homez', $ret['homez']['username']);
-        $this->assertEquals('?user=homez', $ret['homez']['ref']);
+        $this->assertTrue(is_numeric($ret[0]['id']));
+        $this->assertEquals('Zelda Home', $ret[0]['name']);
+        $this->assertEquals('homez', $ret[0]['username']);
+        $this->assertEquals('?user=homez', $ret[0]['ref']);
 
-        $this->assertTrue(is_numeric($ret['sheldons']['id']));
-        $this->assertEquals('Amy Sheldon', $ret['sheldons']['name']);
-        $this->assertEquals('sheldons', $ret['sheldons']['username']);
-        $this->assertEquals('?user=sheldons', $ret['sheldons']['ref']);
+        $this->assertTrue(is_numeric($ret[1]['id']));
+        $this->assertEquals('Amy Sheldon', $ret[1]['name']);
+        $this->assertEquals('sheldons', $ret[1]['username']);
+        $this->assertEquals('?user=sheldons', $ret[1]['ref']);
     }
 
     /**
@@ -100,7 +102,6 @@ class UsersTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertTrue(is_array($ret));
         $this->assertTrue(count($ret) == 1);
-        $this->assertTrue(array_key_exists('balls', $ret));
-        $this->assertEquals("Duplicate entry 'balls' for key 'idxUserName'", $ret['balls']);
+        $this->assertEquals("Duplicate entry 'balls' for key 'idxUserName'", $ret[0]);
     }
 }

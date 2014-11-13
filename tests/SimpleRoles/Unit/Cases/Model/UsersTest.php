@@ -16,7 +16,7 @@ class UsersTest extends \PHPUnit_Framework_TestCase {
 
     public function setUp()
     {
-        $this->db = new \PDO("mysql:host=localhost;dbname=simpleRoles", 'test', '');
+        $this->db = new \PDO("mysql:host=127.0.0.1;dbname=simpleRoles", 'travis', '');
         parent::setUp();
     }
 
