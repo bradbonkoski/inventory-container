@@ -12,6 +12,7 @@ env:
 before_script:
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
+  - echo "extension = apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - mysql -e "CREATE database IF NOT EXISTS simpleRoles" -uroot
   - mysql simpleRoles -uroot < db/schema.sql
   - mysql simpleRoles -uroot < tests/Seeds/roles.sql
