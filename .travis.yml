@@ -20,7 +20,7 @@ before_script:
   - cp config/app_travis.yml config/app.yml
 
 script:
-  - cd tests; ant
+  - cd tests; ant travis
 
 notifications:
   on_success: never
