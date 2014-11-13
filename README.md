@@ -1,6 +1,6 @@
 Simple Roles
 ===================
-[![Build Status](https://travis-ci.org/bradbonkoski/simpleRoles.svg?branch=master)](https://travis-ci.org/bradbonkoski/simpleRoles
+[![Build Status](https://travis-ci.org/bradbonkoski/simpleRoles.svg?branch=master)](https://travis-ci.org/bradbonkoski/simpleRoles)
 
 This is a simple web service to managed a roles database.  
 
