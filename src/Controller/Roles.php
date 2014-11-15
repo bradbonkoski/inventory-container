@@ -138,4 +138,15 @@ class Roles
 
         return $app->json($ret, 200);
     }
+
+    /**
+     * @param Application $app
+     * @param $user
+     * @param $role
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function userInRole(Application $app, $user, $role)
+    {
+        return $app->json(array(), 404);
+    }
 }

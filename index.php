@@ -18,8 +18,11 @@ $app->after(function (Request $request, Response $response) {
 //GET Requests
 $app->get('/roles', 'SimpleRoles\Controller\Roles::listRoles');
 $app->get('/roles/{pattern}', 'SimpleRoles\Controller\Roles::listRoles');
+// Check is a user is in a given role
+$app->get('/roles/{user}/{role}', 'SimpleRoles\Controller\Roles::userInRole');
 
 $app->get('/users/{role}', 'SimpleRoles\Controller\Roles::getUsers');
+
 
 //POST - CREATES
 $app->post('/roles', 'SimpleRoles\Controller\Roles::newRoles'); //creates new role

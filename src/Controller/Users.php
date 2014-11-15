@@ -19,6 +19,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Users
 {
+    /**
+     * @param Request $req
+     * @param Application $app
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
     public function newUsers(Request $req, Application $app)
     {
         $ret = array();
