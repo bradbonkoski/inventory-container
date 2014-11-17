@@ -1,0 +1,9 @@
+general:
+
+# Mysql or the like Database Connection Attributes.
+db:
+  host: db
+  port: 3306
+  user: test
+  pass:
+  dbname: simpleRoles
