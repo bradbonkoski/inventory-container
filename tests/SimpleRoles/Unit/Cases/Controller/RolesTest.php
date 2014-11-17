@@ -258,4 +258,21 @@ class RolesTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue(array_key_exists('msg', $ret));
         $this->assertEquals('User In Role', $ret['msg']);
     }
+
+    /**
+     * @test
+     * @covers SimpleRoles\Controller\Roles::userInRole
+     * @uses SimpleRoles\Model\Roles
+     * @uses SimpleRoles\Model\Users
+     */
+    public function testUserInRoleBad()
+    {
+        $rolesController = new \SimpleRoles\Controller\Roles();
+        $res = $rolesController->userInRole($this->app, 'whites', 'admin');
+
+        $this->assertEquals(404, $res->getStatusCode());
+        $ret = json_decode($res->getContent(), true);
+        $this->assertTrue(array_key_exists('msg', $ret));
+        $this->assertEquals('No User Found', $ret['msg']);
+    }
 }
