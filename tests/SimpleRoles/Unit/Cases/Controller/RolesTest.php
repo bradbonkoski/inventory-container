@@ -241,4 +241,21 @@ class RolesTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue(is_array($ret));
         $this->assertEquals(2, count($ret));
     }
+
+    /**
+     * @test
+     * @covers SimpleRoles\Controller\Roles::userInRole
+     * @uses SimpleRoles\Model\Roles
+     * @uses SimpleRoles\Model\Users
+     */
+    public function testUserInRoleGood()
+    {
+        $rolesController = new \SimpleRoles\Controller\Roles();
+        $res = $rolesController->userInRole($this->app, 'whites', 'read');
+
+        $this->assertEquals(200, $res->getStatusCode());
+        $ret = json_decode($res->getContent(), true);
+        $this->assertTrue(array_key_exists('msg', $ret));
+        $this->assertEquals('User In Role', $ret['msg']);
+    }
 }

@@ -147,6 +147,18 @@ class Roles
      */
     public function userInRole(Application $app, $user, $role)
     {
-        return $app->json(array(), 404);
+        $roleModel = new \SimpleRoles\Model\Roles($app['db']);
+        $userModel = new Users($app['db']);
+
+        $roleInfo = $roleModel->getUserIdsForRole($role);
+        $userInfo = $userModel->getUserByUserName($user);
+        $uid = $userInfo['id'];
+
+        foreach($roleInfo as $r) {
+            if ($r['user_id'] == $uid) {
+                return $app->json(array('msg' => "User In Role"), 200);
+            }
+        }
+        return $app->json(array('msg' => "No User Found"), 404);
     }
 }

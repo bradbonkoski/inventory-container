@@ -13,5 +13,6 @@ insert into user_roles(role_id, user_id) VALUES
   (11, 3),
   (11, 4),
   (12, 2),
-  (12, 3)
+  (12, 3),
+  (1, 108) -- used for testUserInRoleGood Controller Test
 ;
