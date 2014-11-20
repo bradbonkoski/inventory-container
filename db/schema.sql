@@ -1,3 +1,4 @@
+
 -- MySQL dump 10.15  Distrib 10.0.10-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: simpleRoles
@@ -15,7 +16,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE DATABASE IF NOT EXISTS simpleRoles;
 
 -- Table structure for table `role`
 --

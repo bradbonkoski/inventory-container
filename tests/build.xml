@@ -162,7 +162,7 @@
     <target name="behat_config" description="configure for behat">
         <property name="web_host" value="default"/>
         <property name="web_port" value="default"/>
-        <property name="web_path" value="default"/>
+        <property name="web_path" value=""/>
 
         <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[web_host]" value="${web_host}"/>
         <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[web_port]" value="${web_port}"/>
@@ -181,7 +181,18 @@
 
     <target name="db" depends="db:seed"/>
 
-    <target name="db:reload" description="Reload the Schema">
+    <target name="db:init" description="Ensure the DB exists">
+        <sql
+                driver="com.mysql.jdbc.Driver"
+                url="jdbc:mysql://${dbhost}:${dbport}"
+                userid="test"
+                password=""
+                classpath="/usr/share/java/mysql-connector-java.jar"
+                src="${basedir}/db/create_db.sql"
+                />
+    </target>
+
+    <target name="db:reload" description="Reload the Schema" depends="db:init">
         <sql
                 driver="com.mysql.jdbc.Driver"
                 url="jdbc:mysql://${dbhost}:${dbport}/${dbname}"
