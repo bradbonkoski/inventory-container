@@ -172,7 +172,7 @@
         <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[db_name]" value="${dbname}"/>
     </target>
 
-    <target name="behat" description="Run through BDD Tests" depends="db:reload, behat_config">
+    <target name="behat" description="Run through BDD Tests" depends="db:reload, prepare, behat_config">
         <exec executable="behat">
             <arg value="--config"/>
             <arg path="${basedir}/tests/SimpleRoles/Functional/behat.yml"/>
