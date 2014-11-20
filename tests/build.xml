@@ -154,9 +154,16 @@
         </exec>
     </target>
 
-    <target name="db" depends="db:reload"/>
+    <target name="behat" description="Run through BDD Tests" depends="db:reload">
+        <exec executable="behat">
+            <arg value="--config"/>
+            <arg path="${basedir}/tests/SimpleRoles/Functional/behat.yml"/>
+        </exec>
+    </target>
 
-    <target name="db:reload" description="Reload the Schema Document and seeds">
+    <target name="db" depends="db:seed"/>
+
+    <target name="db:reload" description="Reload the Schema">
         <property name="dbname" value="simpleRoles"/>
         <sql
                 driver="com.mysql.jdbc.Driver"
@@ -166,6 +173,10 @@
                 classpath="/usr/share/java/mysql-connector-java.jar"
                 src="${basedir}/db/schema.sql"
                 />
+    </target>
+
+    <target name="db:seed" depends="db:reload" description="Seed Database for Unit Tests">
+        <property name="dbname" value="simpleRoles"/>
         <sql
                 driver="com.mysql.jdbc.Driver"
                 url="jdbc:mysql://localhost:3306/${dbname}"

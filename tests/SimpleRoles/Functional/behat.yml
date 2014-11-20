@@ -1,0 +1,11 @@
+#behat.hyml
+default:
+  paths:
+    features: features
+    bootstrap: %behat.paths.features%/bootstrap
+
+  formatter:
+    name: pretty,junit,html
+    parameters:
+      output_path: null, build/behat, build/logs/behat_report.html
+      decorated: true
