@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="SimpleRoles" default="build" basedir="../">
+
+    <property name="dbname" value="simpleRoles"/>
+    <property name="dbhost" value="localhost"/>
+    <property name="dbport" value="3306"/>
+
     <target name="build"
             depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpunit"/>
 
@@ -154,7 +159,20 @@
         </exec>
     </target>
 
-    <target name="behat" description="Run through BDD Tests" depends="db:reload">
+    <target name="behat_config" description="configure for behat">
+        <property name="web_host" value="default"/>
+        <property name="web_port" value="default"/>
+        <property name="web_path" value="default"/>
+
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[web_host]" value="${web_host}"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[web_port]" value="${web_port}"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[web_path]" value="${web_path}"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[db_host]" value="${dbhost}"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[db_port]" value="${dbport}"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[db_name]" value="${dbname}"/>
+    </target>
+
+    <target name="behat" description="Run through BDD Tests" depends="db:reload, behat_config">
         <exec executable="behat">
             <arg value="--config"/>
             <arg path="${basedir}/tests/SimpleRoles/Functional/behat.yml"/>
@@ -164,10 +182,9 @@
     <target name="db" depends="db:seed"/>
 
     <target name="db:reload" description="Reload the Schema">
-        <property name="dbname" value="simpleRoles"/>
         <sql
                 driver="com.mysql.jdbc.Driver"
-                url="jdbc:mysql://localhost:3306/${dbname}"
+                url="jdbc:mysql://${dbhost}:${dbport}/${dbname}"
                 userid="test"
                 password=""
                 classpath="/usr/share/java/mysql-connector-java.jar"
@@ -176,10 +193,9 @@
     </target>
 
     <target name="db:seed" depends="db:reload" description="Seed Database for Unit Tests">
-        <property name="dbname" value="simpleRoles"/>
         <sql
                 driver="com.mysql.jdbc.Driver"
-                url="jdbc:mysql://localhost:3306/${dbname}"
+                url="jdbc:mysql://${dbhost}:${dbport}/${dbname}"
                 userid="test"
                 password=""
                 classpath="/usr/share/java/mysql-connector-java.jar"
@@ -187,7 +203,7 @@
                 />
         <sql
                 driver="com.mysql.jdbc.Driver"
-                url="jdbc:mysql://localhost:3306/${dbname}"
+                url="jdbc:mysql://${dbhost}:${dbport}/${dbname}"
                 userid="test"
                 password=""
                 classpath="/usr/share/java/mysql-connector-java.jar"
@@ -195,7 +211,7 @@
                 />
         <sql
                 driver="com.mysql.jdbc.Driver"
-                url="jdbc:mysql://localhost:3306/${dbname}"
+                url="jdbc:mysql://${dbhost}:${dbport}/${dbname}"
                 userid="test"
                 password=""
                 classpath="/usr/share/java/mysql-connector-java.jar"

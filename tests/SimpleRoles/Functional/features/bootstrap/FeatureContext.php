@@ -7,21 +7,16 @@ use Behat\Behat\Context\ClosuredContextInterface,
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
-//
-// Require 3rd-party libraries here:
-//
-//   require_once 'PHPUnit/Autoload.php';
-//   require_once 'PHPUnit/Framework/Assert/Functions.php';
-//
-require "./../../../bootstrap.php";
-
+echo getcwd()."\n";
+//require "./../../../bootstrap.php";
+require "bootstrap.php";
 /**
  * Features context.
  */
 class FeatureContext extends BehatContext
 {
 
-    private $baseUrl = "http://localhost/sr";
+    private $baseUrl;
     private static $db;
     private $restObject = null;
     private $response = null;
@@ -36,9 +31,19 @@ class FeatureContext extends BehatContext
      */
     public function __construct(array $parameters)
     {
+        $this->baseUrl = rtrim(
+            $parameters['web_host'].":".$parameters['web_port']."/".$parameters['web_path'],
+            '/'
+        );
+
         self::log("New Test Starting: ".date('m/d/Y h:i:s'));
-        $dbh = new \SimpleRoles\DB();
-        self::$db = $dbh->getConn();
+        $dsn = "mysql:dbname={$parameters['db_name']};host={$parameters['db_host']};port={$parameters['db_port']}";
+
+        self::$db = new \PDO($dsn, 'test', '');
+        self::$db->setAttribute(
+            \PDO::ATTR_DEFAULT_FETCH_MODE,
+            \PDO::FETCH_ASSOC
+        );
 
         $this->restObject = new stdClass();
         $this->client = new Guzzle\Service\Client();
@@ -122,7 +127,11 @@ class FeatureContext extends BehatContext
                     $row[$k] = null;
                 }
             }
-            $stmt->execute($row);
+            if (!$stmt->execute($row)) {
+                $err = $stmt->errorInfo();
+                self::log("DB Insert Error!");
+                self::log(print_r($err, true));
+            }
         }
         //throw new PendingException();
     }
@@ -133,6 +142,7 @@ class FeatureContext extends BehatContext
     public function iIssueARequestTo($verb, $page)
     {
         $this->requestUrl = $this->baseUrl.$page;
+        self::log("URL: {$this->requestUrl}");
 
         switch (strtolower($verb)) {
             case 'get':
@@ -145,7 +155,7 @@ class FeatureContext extends BehatContext
                     $resp = $this->client
                         ->delete($this->requestUrl)
                         ->send();
-                } catch (\Guzzle\Http\Exception\RequestException $e) {
+                } catch (\Guzzle\Http\Exception\BadResponseException $e) {
                     $resp = $e->getResponse();
                 }
                 break;
@@ -153,7 +163,7 @@ class FeatureContext extends BehatContext
                 try {
                     $resp = $this->client->put($this->requestUrl)
                         ->send();
-                } catch (\Guzzle\Http\Exception\RequestException $e) {
+                } catch (\Guzzle\Http\Exception\BadResponseException $e) {
                     $resp = $e->getResponse();
                 }
                 break;
@@ -162,7 +172,7 @@ class FeatureContext extends BehatContext
                     $resp = $this->client
                         ->post($this->requestUrl, array(), json_encode($this->requestData))
                         ->send();
-                } catch (\Guzzle\Http\Exception\RequestException $e) {
+                } catch (\Guzzle\Http\Exception\BadResponseException $e) {
                     $resp = $e->getResponse();
                 }
             break;
@@ -207,8 +217,9 @@ class FeatureContext extends BehatContext
     {
         $data = $this->response->json();
         self::log(print_r($data, true));
-        if (empty($data)) {
-            throw new Exception("Request was not JSON");
+        if (!is_array($data)) {
+            self::log("TEST Failed - [FeatureContext::theResponseIsJson]");
+            throw new Exception("Response was not JSON");
         }
     }
 
