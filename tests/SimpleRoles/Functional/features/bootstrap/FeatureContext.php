@@ -7,8 +7,6 @@ use Behat\Behat\Context\ClosuredContextInterface,
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
-echo getcwd()."\n";
-//require "./../../../bootstrap.php";
 require "bootstrap.php";
 /**
  * Features context.
@@ -38,6 +36,7 @@ class FeatureContext extends BehatContext
 
         self::log("New Test Starting: ".date('m/d/Y h:i:s'));
         $dsn = "mysql:dbname={$parameters['db_name']};host={$parameters['db_host']};port={$parameters['db_port']}";
+        self::log("DSN is: $dsn");
 
         self::$db = new \PDO($dsn, 'test', '');
         self::$db->setAttribute(
