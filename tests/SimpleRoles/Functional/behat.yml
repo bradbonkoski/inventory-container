@@ -1,5 +1,12 @@
 #behat.hyml
 default:
+  context:
+    class: "FeatureContext"
+    parameters:
+      web_host: "[web_host]"
+      web_port: "[web_port]"
+      web_path: "[web_path]"
+
   paths:
     features: features
     bootstrap: %behat.paths.features%/bootstrap
