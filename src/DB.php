@@ -57,7 +57,7 @@ class DB extends \PDO
 
     /**
      * Helper Function to get direct access to the PDO object contained in the class
-     * 
+     *
      * @return \PDO
      */
     public function getConn()
