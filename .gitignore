@@ -4,3 +4,4 @@ app.yml
 build/logs
 build/pdepend
 build/behat
+junit
