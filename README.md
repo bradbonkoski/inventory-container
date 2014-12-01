@@ -1,5 +1,6 @@
-Simple Roles [![Build Status](https://travis-ci.org/bradbonkoski/simpleRoles.svg?branch=master)](https://travis-ci.org/bradbonkoski/simpleRoles)
+Simple Roles [![Build Status](https://travis-ci.org/bradbonkoski/simpleRoles.svg?branch=master)](https://travis-ci.org/bradbonkoski/simpleRoles) [![Code Climate](https://codeclimate.com/github/bradbonkoski/simpleRoles/badges/gpa.svg)](https://codeclimate.com/github/bradbonkoski/simpleRoles)
 ===================
+## 
 
 This is a simple web service to managed a roles database.  
 
