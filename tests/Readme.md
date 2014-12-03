@@ -32,4 +32,8 @@ ant -f tests/build.xml
 
 outside of a Jenkins Environment you can view the results of this within the build directory.
 
+### Code Coverage
+![Code Coverage](assets/docs/screenshots/sr-codecoverage.png)
+
+
 ## Functional Tests
