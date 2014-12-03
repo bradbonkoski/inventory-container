@@ -5,3 +5,4 @@ build/logs
 build/pdepend
 build/behat
 junit
+tests/SimpleRoles/Functional/behat-run.yml

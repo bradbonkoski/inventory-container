@@ -15,6 +15,8 @@
     <target name="clean" description="Cleanup build artifacts">
         <delete dir="${basedir}/build/logs"/>
         <delete dir="${basedir}/build/pdepend"/>
+        <delete dir="${basedir}/build/behat"/>
+        <delete dir="${basedir}/junit"/>
     </target>
 
     <target name="prepare" depends="clean"
@@ -159,39 +161,44 @@
         </exec>
     </target>
 
-    <target name="behat_config" description="configure for behat">
+    <target name="behat-run-config" description="Create a Run Config from the base config">
+        <delete file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml"/>
+        <copy file="${basedir}/tests/SimpleRoles/Functional/behat.yml" tofile="${basedir}/tests/SimpleRoles/Functional/behat-run.yml"/>
+    </target>
+
+    <target name="behat_config" description="configure for behat" depends="behat-run-config">
         <property name="web_host" value="default"/>
         <property name="web_port" value="default"/>
         <property name="web_path" value=""/>
 
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[web_host]" value="${web_host}"/>
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[web_port]" value="${web_port}"/>
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[web_path]" value="${web_path}"/>
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[db_host]" value="${dbhost}"/>
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[db_port]" value="${dbport}"/>
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[db_name]" value="${dbname}"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[web_host]" value="${web_host}"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[web_port]" value="${web_port}"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[web_path]" value="${web_path}"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[db_host]" value="${dbhost}"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[db_port]" value="${dbport}"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[db_name]" value="${dbname}"/>
     </target>
 
-    <target name="behat_config_local" description="configure for behat">
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[web_host]" value="http://127.0.0.1"/>
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[web_port]" value="80"/>
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[web_path]" value="sr"/>
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[db_host]" value="localhost"/>
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[db_port]" value="3306"/>
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat.yml" token="[db_name]" value="simpleRoles"/>
+    <target name="behat_config_local" description="configure for behat" depends="behat-run-config">
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[web_host]" value="http://127.0.0.1"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[web_port]" value="80"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[web_path]" value="sr"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[db_host]" value="localhost"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[db_port]" value="3306"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[db_name]" value="simpleRoles"/>
     </target>
 
     <target name="behat" description="Run through BDD Tests" depends="db:reload, prepare, behat_config">
         <exec executable="behat">
             <arg value="--config"/>
-            <arg path="${basedir}/tests/SimpleRoles/Functional/behat.yml"/>
+            <arg path="${basedir}/tests/SimpleRoles/Functional/behat-run.yml"/>
         </exec>
     </target>
 
     <target name="behat-local" description="Run through BDD Tests Locally" depends="db:reload, prepare, behat_config_local">
         <exec executable="behat">
             <arg value="--config"/>
-            <arg path="${basedir}/tests/SimpleRoles/Functional/behat.yml"/>
+            <arg path="${basedir}/tests/SimpleRoles/Functional/behat-run.yml"/>
         </exec>
     </target>
 

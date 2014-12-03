@@ -44,14 +44,14 @@ and every scenario will add in the necessary data in order to test the API entry
 To run locally, you should edit the build file in test/build.xml  Specifcially this section which defines the defaults for your local environment:
 
 ```
-    <target name="behat_config_local" description="configure for behat" depends="behat-run-config">
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[web_host]" value="http://127.0.0.1"/>
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[web_port]" value="80"/>
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[web_path]" value="sr"/>
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[db_host]" value="localhost"/>
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[db_port]" value="3306"/>
-        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[db_name]" value="simpleRoles"/>
-    </target>
+<target name="behat_config_local" description="configure for behat" depends="behat-run-config">
+    <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[web_host]" value="http://127.0.0.1"/>
+    <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[web_port]" value="80"/>
+    <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[web_path]" value="sr"/>
+    <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[db_host]" value="localhost"/>
+    <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[db_port]" value="3306"/>
+    <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[db_name]" value="simpleRoles"/>
+</target>
 ```
 
 Once you have these updated to your local environment you can easily run the tests from the root directory by running these commands:
