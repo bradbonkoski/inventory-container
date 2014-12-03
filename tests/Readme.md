@@ -37,3 +37,36 @@ outside of a Jenkins Environment you can view the results of this within the bui
 
 
 ## Functional Tests
+
+The functional tests use Behat to test the various web service entry points.  It does not seed the database, but rather reloads the schema
+and every scenario will add in the necessary data in order to test the API entry point.
+
+To run locally, you should edit the build file in test/build.xml  Specifcially this section which defines the defaults for your local environment:
+
+```
+    <target name="behat_config_local" description="configure for behat" depends="behat-run-config">
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[web_host]" value="http://127.0.0.1"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[web_port]" value="80"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[web_path]" value="sr"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[db_host]" value="localhost"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[db_port]" value="3306"/>
+        <replace file="${basedir}/tests/SimpleRoles/Functional/behat-run.yml" token="[db_name]" value="simpleRoles"/>
+    </target>
+```
+
+Once you have these updated to your local environment you can easily run the tests from the root directory by running these commands:
+
+```
+composer install
+ant -f tests/build.xml behat-local
+```
+
+The result should provide output like:
+
+```
+     [exec] 7 scenarios (7 passed)
+     [exec] 45 steps (45 passed)
+     [exec] 0m0.62s
+```
+
+Additionally result files will be copied to the build directory.  Specifically the directory: build/behat which will have the junit formatted results and the file: build/logs/behat_report.html which will have the output nicely formatted in HTML.
