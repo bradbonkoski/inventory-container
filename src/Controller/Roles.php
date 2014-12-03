@@ -116,7 +116,7 @@ class Roles
         $roleModel = new \SimpleRoles\Model\Roles($app['db']);
         $userModel = new Users($app['db']);
 
-        foreach($records as $record) {
+        foreach ($records as $record) {
             $rid = $roleModel->roleExists($record['role']);
             $userInfo = $userModel->getUserByUserName($record['user']);
             $uid = $userInfo['id'];
@@ -145,7 +145,7 @@ class Roles
         $roleModel = new \SimpleRoles\Model\Roles($app['db']);
         $userModel = new Users($app['db']);
 
-        foreach($records as $record) {
+        foreach ($records as $record) {
             $rid = $roleModel->roleExists($record['role']);
             $userInfo = $userModel->getUserByUserName($record['user']);
             $uid = $userInfo['id'];
@@ -171,7 +171,7 @@ class Roles
         $userInfo = $userModel->getUserByUserName($user);
         $uid = $userInfo['id'];
 
-        foreach($roleInfo as $r) {
+        foreach ($roleInfo as $r) {
             if ($r['user_id'] == $uid) {
                 return $app->json(array('msg' => "User In Role"), 200);
             }
