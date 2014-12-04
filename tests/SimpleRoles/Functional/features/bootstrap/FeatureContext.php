@@ -160,7 +160,7 @@ class FeatureContext extends BehatContext
                 break;
             case 'put':
                 try {
-                    $resp = $this->client->put($this->requestUrl)
+                    $resp = $this->client->put($this->requestUrl, array(), json_encode($this->requestData))
                         ->send();
                 } catch (\Guzzle\Http\Exception\BadResponseException $e) {
                     $resp = $e->getResponse();
@@ -185,6 +185,24 @@ class FeatureContext extends BehatContext
     public function iWantToCreateANewRoleNamedWithDescription($name, $desc)
     {
         $arr = array('name' => $name, 'description' => $desc);
+        $this->requestData[] = $arr;
+    }
+
+    /**
+     * @Given /^I want to create a new role named "([^"]*)" with a description of "([^"]*)"$/
+     */
+    public function iWantToCreateANewRoleNamedWithADescriptionOf($name, $desc)
+    {
+        $arr = array('name' => $name, 'description' => $desc);
+        $this->requestData[] = $arr;
+    }
+
+    /**
+     * @Given /^I want to add user "([^"]*)" to the role "([^"]*)"$/
+     */
+    public function iWantToAddUserToTheRole($user, $role)
+    {
+        $arr = array('user' => $user, 'role' => $role);
         $this->requestData[] = $arr;
     }
 
